@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Install TechChat</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .install-guide {
+            max-width: 600px;
+            margin: 40px auto;
+            padding: 20px;
+            background: rgba(76, 201, 240, 0.1);
+            border-radius: 12px;
+            color: white;
+        }
+        .install-steps {
+            margin-top: 20px;
+        }
+        .install-step {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: rgba(76, 201, 240, 0.05);
+            border-radius: 8px;
+            border: 1px solid rgba(76, 201, 240, 0.2);
+        }
+        .browser-specific {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(76, 201, 240, 0.2);
+        }
+        .browser-icon {
+            width: 24px;
+            height: 24px;
+            vertical-align: middle;
+            margin-right: 10px;
+        }
+        h3 {
+            color: #4cc9f0;
+            margin-bottom: 15px;
+        }
+        .install-button {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #4cc9f0;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 20px;
+            text-decoration: none;
+        }
+        .install-button:hover {
+            background: #3ba8cc;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="install-guide">
+        <h2>Install TechChat App</h2>
+        <p>Install TechChat on your device for the best experience!</p>
+
+        <div class="install-steps">
+            <div id="install-prompt" class="install-step">
+                <h3>Quick Install</h3>
+                <p>Click the button below to install TechChat:</p>
+                <button id="installButton" class="install-button">Install TechChat</button>
+            </div>
+
+            <div class="browser-specific">
+                <h3>Manual Installation Steps</h3>
+                
+                <!-- Chrome on Android -->
+                <div class="install-step" id="chrome-android">
+                    <h4><img src="icons/chrome.png" alt="Chrome" class="browser-icon">Chrome on Android</h4>
+                    <ol>
+                        <li>Tap the menu icon (⋮)</li>
+                        <li>Tap "Add to Home screen"</li>
+                        <li>Follow the prompts to install</li>
+                    </ol>
+                </div>
+
+                <!-- Safari on iOS -->
+                <div class="install-step" id="safari-ios">
+                    <h4><img src="icons/safari.png" alt="Safari" class="browser-icon">Safari on iOS</h4>
+                    <ol>
+                        <li>Tap the share button (□↑)</li>
+                        <li>Scroll down and tap "Add to Home Screen"</li>
+                        <li>Tap "Add" to confirm</li>
+                    </ol>
+                </div>
+
+                <!-- Desktop Chrome -->
+                <div class="install-step" id="chrome-desktop">
+                    <h4><img src="icons/chrome.png" alt="Chrome" class="browser-icon">Chrome on Desktop</h4>
+                    <ol>
+                        <li>Click the menu icon (⋮)</li>
+                        <li>Click "Install TechChat..."</li>
+                        <li>Click "Install" in the prompt</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let deferredPrompt;
+        const installButton = document.getElementById('installButton');
+        const installPrompt = document.getElementById('install-prompt');
+
+        // Hide the install button by default
+        installButton.style.display = 'none';
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            // Prevent Chrome 67 and earlier from automatically showing the prompt
+            e.preventDefault();
+            // Stash the event so it can be triggered later
+            deferredPrompt = e;
+            // Show the install button
+            installButton.style.display = 'inline-block';
+        });
+
+        installButton.addEventListener('click', async () => {
+            if (deferredPrompt) {
+                // Show the install prompt
+                deferredPrompt.prompt();
+                // Wait for the user to respond to the prompt
+                const { outcome } = await deferredPrompt.userChoice;
+                // We no longer need the prompt
+                deferredPrompt = null;
+                // Hide the install button
+                installButton.style.display = 'none';
+            }
+        });
+
+        // Hide install button and show success message when app is installed
+        window.addEventListener('appinstalled', (evt) => {
+            installPrompt.innerHTML = '<h3>✅ Installation Successful!</h3><p>TechChat has been installed on your device. You can now launch it from your home screen.</p>';
+        });
+
+        // Show/hide browser-specific instructions based on user's browser
+        function updateInstructions() {
+            const ua = navigator.userAgent;
+            const isMobile = /Mobile|Android|iPhone|iPad|iPod/i.test(ua);
+            const isIOS = /iPad|iPhone|iPod/.test(ua);
+            const isChrome = /Chrome/.test(ua) && !/Edge/.test(ua);
+
+            document.getElementById('chrome-android').style.display = 
+                isMobile && !isIOS && isChrome ? 'block' : 'none';
+            document.getElementById('safari-ios').style.display = 
+                isIOS ? 'block' : 'none';
+            document.getElementById('chrome-desktop').style.display = 
+                !isMobile && isChrome ? 'block' : 'none';
+        }
+
+        updateInstructions();
+    </script>
+</body>
+</html>

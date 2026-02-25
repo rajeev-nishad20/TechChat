@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="description" content="TechChat - Your AI-powered coding companion">
+  <meta name="theme-color" content="#1a0933">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="TechChat">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="msapplication-TileColor" content="#1a0933">
+  <meta name="msapplication-tap-highlight" content="no">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="apple-touch-icon" sizes="512x512" href="icons/icon-512.png">
+  <link rel="mask-icon" href="icons/safari-pinned-tab.svg" color="#1a0933">
+  <title>TechChat - AI Programming Assistant</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600&family=Inter:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css">
+</head>
+<body>
+  <button class="menu-toggle" id="menuToggle" aria-label="Toggle Menu">☰</button>
+  <div class="dashboard">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="robot-logo">
+          <div class="robot-face">
+            <div class="eyes">
+              <div class="eye"></div>
+              <div class="eye"></div>
+            </div>
+          </div>
+        </div>
+        <h2><span class="tech">Tech</span>Chat</h2>
+      </div>
+      <nav>
+        <button id="chatSectionBtn" class="active">
+          <i class="ri-chat-3-line"></i>
+          Chat
+        </button>
+        <button id="historySectionBtn">
+          <i class="ri-history-line"></i>
+          History
+          <span class="count">0</span>
+        </button>
+        <button id="analyticsBtn">
+          <i class="ri-bar-chart-box-line"></i>
+          Analytics
+        </button>
+      </nav>
+
+      <div class="stats-widget">
+        <h3>Messages Today</h3>
+        <div class="stat">
+          <span class="number">0</span>
+        </div>
+        <h3>Avg. Length</h3>
+        <div class="stat">
+          <span class="number">0</span>
+        </div>
+        <h3>Topic Analysis</h3>
+        <div class="topic-chart"></div>
+      </div>
+    </aside>
+
+    <!-- Main Section -->
+    <main class="main">
+      <div class="header">
+        <div class="page-title">
+          <button class="toggle-sidebar" id="toggleSidebar" aria-label="Toggle Sidebar">
+            <i class="ri-menu-fold-line"></i>
+          </button>
+          <div>
+            <h1>TechChat</h1>
+            <p>Your AI-powered coding companion</p>
+          </div>
+        </div>
+        <div class="user-menu">
+          <button class="share-app-btn" id="shareBtn" aria-label="Share App">
+            <i class="ri-share-line"></i>
+          </button>
+          <img src="https://ui-avatars.com/api/?name=RN&background=4cc9f0&color=fff&rounded=true" alt="User" class="avatar">
+        </div>
+      </div>
+
+      <!-- Chat Section -->
+      <section id="chatSection" class="active">
+        <div class="chat-window" id="chatWindow">
+          <div class="welcome-message">
+            <img src="https://ui-avatars.com/api/?name=CB&background=4cc9f0&color=fff&rounded=true&size=64" alt="ChatBot" class="bot-avatar">
+            <h2>Hello! 👋</h2>
+            <p>Ask me about DSA or coding problems. I'm here to help!</p>
+          </div>
+        </div>
+        <div class="chat-input">
+          <input type="text" id="userInput" placeholder="Ask me about DSA or coding...">
+          <button id="sendBtn" aria-label="Send Message">
+            <i class="ri-send-plane-fill"></i>
+          </button>
+        </div>
+      </section>
+
+      <!-- History Section -->
+      <section id="historySection">
+        <h3>Chat History</h3>
+        <ul id="historyList"></ul>
+        <div class="history-empty" id="historyEmpty">
+          <i class="ri-history-line"></i>
+          <p>No chat history yet</p>
+          <small>Your conversations will appear here</small>
+        </div>
+      </section>
+
+      <!-- Analytics Section -->
+      <section id="trendSection">
+        <div class="analytics-grid">
+          <div class="stat-card">
+            <h4>Messages Today</h4>
+            <div class="stat-value">0</div>
+          </div>
+          <div class="stat-card">
+            <h4>Avg. Length</h4>
+            <div class="stat-value">0</div>
+          </div>
+          <div class="stat-card">
+            <h4>Topic Analysis</h4>
+            <canvas id="topicChart"></canvas>
+          </div>
+          <div class="stat-card">
+            <h4>Response Time</h4>
+            <div class="stat-value">2.5s</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Profile Section -->
+      <section id="profileSection">
+        <div class="profile-card">
+          <div class="profile-avatar">
+            <img src="https://ui-avatars.com/api/?name=Developer&background=0D8ABC&color=fff&size=96" alt="User Avatar" />
+          </div>
+          <div class="profile-info">
+            <h3>User Profile <span role="img" aria-label="profile">👤</span></h3>
+            <ul class="profile-details">
+              <li><span class="profile-label">Name:</span> <span class="profile-value">Rajeev Nishad</span></li>
+              <li><span class="profile-label">Interest:</span> <span class="profile-value">DSA &amp; Competitive Programming</span></li>
+              <li><span class="profile-label">Goal:</span> <span class="profile-value">Crack Coding Interviews <span role="img" aria-label="rocket">🚀</span></span></li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+
+  <!-- Share Modal -->
+  <div class="share-modal" id="shareModal">
+    <div class="share-content">
+      <h3>Share TechChat</h3>
+      <div class="qr-code" id="qrCode"></div>
+      <div class="share-links">
+        <button class="share-button" id="desktopLink">
+          <i class="ri-computer-line"></i>
+          Desktop Link
+        </button>
+        <button class="share-button" id="mobileLink">
+          <i class="ri-smartphone-line"></i>
+          Mobile Link
+        </button>
+        <button class="share-button" id="tabletLink">
+          <i class="ri-tablet-line"></i>
+          Tablet Link
+        </button>
+      </div>
+      <div class="share-instructions">
+        <p>1. Make sure devices are on the same network</p>
+        <p>2. Scan QR code or click appropriate device link</p>
+        <p>3. Install as app for best experience</p>
+      </div>
+      <button class="close-modal" id="closeShare">Close</button>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/atom-one-dark.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+  <script src="script.js"></script>
+  <script src="install.js"></script>
+  <script>
+    // Handle mobile keyboard visibility
+    const chatInput = document.getElementById('userInput');
+    const chatWindow = document.getElementById('chatWindow');
+    
+    chatInput.addEventListener('focus', () => {
+      // Add a small delay to account for keyboard animation
+      setTimeout(() => {
+        chatWindow.scrollTop = chatWindow.scrollHeight;
+      }, 300);
+    });
+
+    // Fix for iOS bounce effect
+    document.body.addEventListener('touchmove', function(e) {
+      if (e.target.closest('.chat-window')) return;
+      e.preventDefault();
+    }, { passive: false });
+
+    // Detect mobile devices
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    if (isMobile) {
+      document.body.classList.add('mobile-device');
+    }
+
+    // Handle mobile orientation changes
+    window.addEventListener('orientationchange', () => {
+      // Add a small delay to account for orientation animation
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        chatWindow.scrollTop = chatWindow.scrollHeight;
+      }, 100);
+    });
+  </script>
+</body>
+</html>

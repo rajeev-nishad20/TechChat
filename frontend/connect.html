@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechChat QR Code</title>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.4.4/build/qrcode.min.js"></script>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background: #110726;
+            color: white;
+            font-family: 'Arial', sans-serif;
+            padding: 20px;
+        }
+        .container {
+            text-align: center;
+            max-width: 600px;
+        }
+        #qrcode {
+            margin: 20px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 12px;
+            display: inline-block;
+            box-shadow: 0 0 20px rgba(76, 201, 240, 0.3);
+        }
+        h1 {
+            color: #4cc9f0;
+            margin-bottom: 30px;
+        }
+        .instructions {
+            background: rgba(76, 201, 240, 0.1);
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 30px;
+            text-align: left;
+        }
+        .instructions h2 {
+            color: #4cc9f0;
+            font-size: 1.2rem;
+            margin-top: 0;
+        }
+        .instructions ol {
+            margin: 0;
+            padding-left: 20px;
+        }
+        .instructions li {
+            margin: 10px 0;
+            color: rgba(255, 255, 255, 0.9);
+        }
+        .url-display {
+            background: rgba(76, 201, 240, 0.05);
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 20px;
+            word-break: break-all;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Connect to TechChat</h1>
+        <div id="qrcode"></div>
+        <div class="url-display" id="urlDisplay"></div>
+        <div class="instructions">
+            <h2>How to Connect:</h2>
+            <ol>
+                <li>Make sure your phone is connected to the same WiFi network as this computer</li>
+                <li>Open your phone's camera and point it at the QR code above</li>
+                <li>Tap the notification that appears to open the link</li>
+                <li>If scanning doesn't work, manually type the URL shown above in your phone's browser</li>
+                <li>When prompted, click "Add to Home Screen" for the best experience</li>
+            </ol>
+        </div>
+    </div>
+    <script>
+        const addresses = [];
+        // Get all possible IP addresses
+        fetch('http://localhost:3000/ip')
+            .then(response => response.json())
+            .catch(() => {
+                // Fallback IP addresses
+                return {
+                    ip: '10.91.51.204',
+                    hostname: 'LAPTOP-EOHTPEED'
+                };
+            })
+            .then(data => {
+                const url = `http://${data.ip}:3000`;
+                // Generate QR Code
+                QRCode.toCanvas(document.getElementById('qrcode'), url, {
+                    width: 300,
+                    margin: 2,
+                    color: {
+                        dark: '#000',
+                        light: '#fff'
+                    }
+                });
+                // Display URL
+                document.getElementById('urlDisplay').textContent = url;
+            });
+    </script>
+</body>
+</html>
