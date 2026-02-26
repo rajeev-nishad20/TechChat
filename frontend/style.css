@@ -1383,4 +1383,86 @@ section.active {
   }
 }
 
-/* ...existing code... */
+.chat-status {
+  margin: 0 0 12px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.chat-status[data-state="ok"] {
+  color: #8ee5a1;
+  border-color: rgba(142, 229, 161, 0.35);
+}
+
+.chat-status[data-state="warn"] {
+  color: #ffd166;
+  border-color: rgba(255, 209, 102, 0.35);
+}
+
+.chat-status[data-state="error"] {
+  color: #ff8a8a;
+  border-color: rgba(255, 138, 138, 0.35);
+}
+
+.chat-input #sendBtn {
+  background: linear-gradient(135deg, #4361ee, #4cc9f0);
+}
+
+.chat-input #sendBtn:hover {
+  background: linear-gradient(135deg, #3f37c9, #0a6d8e);
+}
+
+.chat-input #micBtn.is-listening {
+  animation: micPulse 1s infinite;
+  background: #ff4757;
+}
+
+@keyframes micPulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.08);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+body.light-theme {
+  --primary-color: #f4f7ff;
+  --secondary-color: #4361ee;
+  --background-color: #eaf1ff;
+  --surface-color: #ffffff;
+  --text-color: #1a2238;
+  --text-secondary: #52607a;
+  --gradient: linear-gradient(135deg, #ffffff, #eaf1ff);
+  --glow: 0 0 14px rgba(67, 97, 238, 0.15);
+  --chat-glow: 0 0 22px rgba(67, 97, 238, 0.15);
+}
+
+body.light-theme .message.user {
+  color: #fff;
+}
+
+body.light-theme .message.bot {
+  color: #1a2238;
+  background: rgba(67, 97, 238, 0.1);
+}

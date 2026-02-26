@@ -46,8 +46,13 @@ self.addEventListener('activate', event => {
 
 // Fetch Event Strategy
 self.addEventListener('fetch', event => {
-  // Network with Cache Fallback Strategy
-  if (event.request.url.includes('/api/')) {
+  // Network with cache fallback for API-like routes
+  if (
+    event.request.url.includes('/api/') ||
+    event.request.url.includes('/chat') ||
+    event.request.url.includes('/config') ||
+    event.request.url.includes('/health')
+  ) {
     event.respondWith(
       fetch(event.request)
         .then(response => {
